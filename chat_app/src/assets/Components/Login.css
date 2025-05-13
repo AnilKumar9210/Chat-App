@@ -11,8 +11,14 @@
   position: relative;
   display: flex;
   gap: 20px;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+}
+
+.none {
+  display: none;
+  font-size: 14px;
+  color: red;
 }
 
 .back {
@@ -27,11 +33,10 @@
   justify-content: center;
   align-items: center;
   width: 30vw;
-  height: 55vh;
+  height: 109vh;
   border-radius: 10px;
   padding: 10px;
   gap: 10px;
-  box-shadow: 0px 10px 20px -18px;
 }
 
 .loginForm {
@@ -42,8 +47,14 @@
   width: 100%;
 }
 
+.loginForm div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .input {
-  max-width: 30vw;
+  width: 30vw;
   background-color: #f5f5f5;
   color: #242424;
   padding: 0.15rem 0.5rem;
@@ -107,14 +118,10 @@ input:hover {
 .login-button .span-mother span:nth-child(4) {
   transition: 0.5s;
 }
-
 .login-button .span-mother span:nth-child(5) {
   transition: 0.6s;
 }
 
-.login-button .span-mother span:nth-child(6) {
-  transition: 0.7s;
-}
 
 .login-button .span-mother2 {
   display: flex;
@@ -150,6 +157,106 @@ input:hover {
   transition: 0.6s;
 }
 
-.login-button .span-mother2 span:nth-child(6) {
+
+/* sigin button  */
+
+.sigin-button {
+  font-weight: bold;
+  color: white;
+  border-radius: 2rem;
+  cursor: pointer;
+  width: 95.02px;
+  height: 42.66px;
+  border: none;
+  background-color: #3653f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sigin-button .span-mother {
+  display: flex;
+  overflow: hidden;
+}
+
+.sigin-button:hover .span-mother {
+  position: absolute;
+}
+
+.sigin-button:hover .span-mother span {
+  transform: translateY(1.2em);
+}
+
+.sigin-button .span-mother span:nth-child(1) {
+  transition: 0.2s;
+}
+
+.sigin-button .span-mother span:nth-child(2) {
+  transition: 0.3s;
+}
+
+.sigin-button .span-mother span:nth-child(3) {
+  transition: 0.4s;
+}
+
+.sigin-button .span-mother span:nth-child(4) {
+  transition: 0.5s;
+}
+.sigin-button .span-mother span:nth-child(5) {
+  transition: 0.6s;
+}
+.sigin-button .span-mother span:nth-child(6) {
   transition: 0.7s;
 }
+
+
+.sigin-button .span-mother2 {
+  display: flex;
+  position: absolute;
+  overflow: hidden;
+}
+
+.sigin-button .span-mother2 span {
+  transform: translateY(-1.2em);
+}
+
+.sigin-button:hover .span-mother2 span {
+  transform: translateY(0);
+}
+
+.sigin-button .span-mother2 span {
+  transition: 0.2s;
+}
+
+.sigin-button .span-mother2 span:nth-child(2) {
+  transition: 0.3s;
+}
+
+.sigin-button .span-mother2 span:nth-child(3) {
+  transition: 0.4s;
+}
+
+.sigin-button .span-mother2 span:nth-child(4) {
+  transition: 0.5s;
+}
+
+.sigin-button .span-mother2 span:nth-child(5) {
+  transition: 0.6s;
+}
+.sigin-button .span-mother2 span:nth-child(6) {
+  transition: 0.7s;
+}
+.sign-in {
+  font-size: 13px;
+  font-weight: 300;
+}
+.sign-in:hover {
+  text-decoration: underline;
+}
+
+.sign-in span {
+  color: #3653f8;
+  cursor: pointer;
+}
+
+.back {cursor: pointer;background-color: white;}
