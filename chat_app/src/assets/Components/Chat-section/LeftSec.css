@@ -1,0 +1,42 @@
+.left-sec {
+    position: relative;
+    background-color: #e7e8f0;
+}
+
+.search-bar input {
+    position: relative;
+    width: 100%;
+    background: none;
+    text-align: center;
+    border: none;
+   
+}
+
+.search-bar img {
+    position: absolute;
+    left: 10px;
+    top: 25%;
+}
+
+.search-bar {
+    margin: 4px 0;
+    height: 7%;
+    background-color: white;
+    display: flex;
+    position: relative;
+    width: 100%;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition:  0.3s ease;
+    justify-content: space-evenly;
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.line {
+    height: 1px;
+    width: 100%;
+    background-color: black;
+}

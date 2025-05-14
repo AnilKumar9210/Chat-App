@@ -2,7 +2,11 @@ import React, { useRef, useState } from 'react'
 import './Login.css'
 import background from '../Images/background1.svg'
 import chatting from '../Images/chating.png'
+import { useNavigate } from 'react-router-dom'  
+
 const Login = () => {
+  const navigate = useNavigate ();
+  const [login,setLogin] = useState (false);
   const [loginDetails,setLoginDetails] = useState ([]);
   const [details,setDetails] = useState ({name:"",email:"",password:""});
   const [signIn,setSignIn] = useState (true)
@@ -12,7 +16,7 @@ const Login = () => {
   const passwordRef = useRef ();
 
 
-  const submitLogin = ()=> {
+  const submitSignIn = ()=> {
     if (details["name"].length <= 3) {
       nameRef.current.style.display = 'block';
     }
@@ -23,7 +27,13 @@ const Login = () => {
       passwordRef.current.style.display = 'block';
     }
     setLoginDetails ((prev)=>([...prev,details]));
+    setLogin (true);
+    navigate ('/chat');
     console.log(loginDetails)
+  }
+
+  const submitLogin = ()=> {
+    navigate ('/chat')
   }
 
   const handleChange = (value,name)=> {
@@ -62,8 +72,8 @@ const Login = () => {
         <span className='no-email none' ref={emailRef}>*Please enter your e-mail*</span>
 
         <input class="input" 
-        name="password" 
-        placeholder="Enter password..." type='password'
+        name="name" 
+        placeholder="Enter username..." type='text'
         onChange={(e)=>{handleChange (e.target.value,e.target.name)}}/>
 
         <input class="input" 
@@ -89,7 +99,7 @@ const Login = () => {
     <span>n</span>
   </span>
 </button>
- :<button className='sigin-button' onClick={submitLogin}>
+ :<button className='sigin-button' onClick={submitSignIn}>
   <span class="span-mother">
     <span>S</span>
     <span>i</span>
