@@ -45,12 +45,15 @@
   position: relative;
   flex-flow: column;
   width: 100%;
+  
 }
 
 .loginForm div {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
@@ -260,3 +263,18 @@ input:hover {
 }
 
 .back {background-color: white;}
+
+.submit-btn {
+  width: 75px;
+  height: 40px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  border-radius: 2rem;
+  cursor: pointer;
+  border: none;
+  background-color: #3653f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

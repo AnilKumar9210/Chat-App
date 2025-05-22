@@ -1,7 +1,17 @@
+import { useRef } from 'react'
 import React from 'react'
 import './LeftSec.css'
 
 const LeftSec = () => {
+
+  const optsRef = useRef(null);
+  const handleOpts = () => {
+    if (optsRef.current.style.display === 'block') {
+      optsRef.current.style.display = 'none';
+    } else {
+      optsRef.current.style.display = 'block';
+    }
+  }
   return (
     <div className='left-sec'>
       <div className="search-bar">
@@ -11,11 +21,18 @@ const LeftSec = () => {
       <div className="line"></div>
       <div className="friends-list">
         <div className="friend">
+          <div className="friend-info">
           <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="x" style={{height:40}}/>
-          <div className="friend-name">
-            <h3>John Doe</h3>
+            <span>John Doe</span>
           </div>
-          <button>:</button>
+          <button onClick={handleOpts} className='friend-btn'>
+            <span className='circle'></span>
+            <span className='circle'></span>
+            <span className='circle'></span>
+          </button>
+        <div className="delete" ref={optsRef}>
+          Delete
+        </div>
         </div>
       </div>
     </div>

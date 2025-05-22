@@ -3,37 +3,27 @@ import './Login.css'
 import background from '../Images/background1.svg'
 import chatting from '../Images/chating.png'
 import { useNavigate } from 'react-router-dom'  
+import { signin,login } from '../Configuration/Firebase'
 
 const Login = () => {
   const navigate = useNavigate ();
-  const [login,setLogin] = useState (false);
-  const [loginDetails,setLoginDetails] = useState ([]);
-  const [details,setDetails] = useState ({name:"",email:"",password:""});
+  const [username,setUserName] = useState ("");
+  const [email,setEmail] = useState ("");
+  const [password,setPassword] = useState ("");
   const [signIn,setSignIn] = useState (true)
 
   const nameRef = useRef ();
   const emailRef = useRef ();
   const passwordRef = useRef ();
 
-
-  const submitSignIn = ()=> {
-    if (details["name"].length <= 3) {
-      nameRef.current.style.display = 'block';
+  const onSubmitHandler = (e)=> {
+    e.preventDefault ();
+    if (!signIn){
+      signin (username,email,password);
+    } else {
+      login (email,password);
     }
-    if (details["email"].length == 0) {
-      emailRef.current.style.display = 'block';
-    }
-    if (details["password"].length <4) {
-      passwordRef.current.style.display = 'block';
-    }
-    setLoginDetails ((prev)=>([...prev,details]));
-    setLogin (true);
     navigate ('/chat');
-    console.log(loginDetails)
-  }
-
-  const submitLogin = ()=> {
-    navigate ('/chat')
   }
 
   const handleChange = (value,name)=> {
@@ -51,39 +41,41 @@ const Login = () => {
         <img src={chatting} alt="nothing" className="back"/>
     <div className='loginPage'>
         {signIn ? <h1 className='login'>Login</h1> : <h1 className='login'>Sign in</h1>}
-      <form action='' method='post' className='loginForm'>
+      <form action='' method='post' className='loginForm' onSubmit={onSubmitHandler}>
         {signIn ?<div>
-        <input class="input" 
+        <input className="input" 
         name="email"
         placeholder="Enter e-mail..." type='email'
-        onChange={(e)=>{handleChange (e.target.value,e.target.name)}}/>
+        onChange={(e)=>{setEmail (e.target.value)}}/>
         <span className='no-email none' ref={emailRef}>*Please enter your e-mail*</span>
-
-        <input class="input" 
+        <input className="input" 
         name="password" 
         placeholder="Enter password..." type='password'
-        onChange={(e)=>{handleChange (e.target.value,e.target.name)}}/>
+        onChange={(e)=>{setPassword (e.target.value)}}/>
         <span className='no-password none' ref={passwordRef}>*Please enter your password*</span>
+        <input type="submit" className='submit-btn' />
         </div> : <div>
-          <input class="input" 
+          <input className="input" 
         name="email" 
         placeholder="Enter e-mail..." type='email'
-        onChange={(e)=>{handleChange (e.target.value,e.target.name)}}/>
+        onChange={(e)=>{setEmail (e.target.value)}}/>
         <span className='no-email none' ref={emailRef}>*Please enter your e-mail*</span>
 
-        <input class="input" 
+        <input className="input" 
         name="name" 
         placeholder="Enter username..." type='text'
-        onChange={(e)=>{handleChange (e.target.value,e.target.name)}}/>
+        onChange={(e)=>{setUserName (e.target.value)}}/>
 
-        <input class="input" 
+        <input className="input" 
         name="password" 
         placeholder="Enter password..." type='password'
-        onChange={(e)=>{handleChange (e.target.value,e.target.name)}}/>
+        onChange={(e)=>{setPassword (e.target.value)}}/>
+        <input type="submit" value="" className="submit-btn" />
+        
           </div>}
       </form>
       <span className={`${!signIn ? 'none' : 'sign-in'}`} >if you don't have an account <span onClick={()=> (setSignIn ((prev)=> (!prev)))}>sign in</span></span>
-{signIn ? <button className='login-button' onClick={submitLogin}>
+{/* {signIn ? <button className='login-button' onClick={onSubmitHandler}>
   <span class="span-mother">
     <span>L</span>
     <span>o</span>
@@ -99,7 +91,7 @@ const Login = () => {
     <span>n</span>
   </span>
 </button>
- :<button className='sigin-button' onClick={submitSignIn}>
+ :<button className='sigin-button' >
   <span class="span-mother">
     <span>S</span>
     <span>i</span>
@@ -116,7 +108,7 @@ const Login = () => {
     <span>i</span>
     <span>n</span>
   </span>
-</button>}
+</button>} */}
 
     </div>
     </div>

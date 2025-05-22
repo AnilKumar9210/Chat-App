@@ -1,42 +1,105 @@
 .left-sec {
-    position: relative;
-    background-color: #e7e8f0;
+  position: relative;
+  background-color: #e7e8f0;
+  /* height: 70%; */
 }
 
 .search-bar input {
-    position: relative;
-    width: 100%;
-    background: none;
-    text-align: center;
-    border: none;
-   
+  position: relative;
+  width: 100%;
+  background: none;
+  text-align: center;
+  border: none;
 }
 
 .search-bar img {
-    position: absolute;
-    left: 10px;
-    top: 25%;
+  position: absolute;
+  left: 10px;
+  top: 25%;
 }
 
 .search-bar {
-    margin: 4px 0;
-    height: 7%;
-    background-color: white;
-    display: flex;
-    position: relative;
-    width: 100%;
-    border-radius: 25px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    transition:  0.3s ease;
-    justify-content: space-evenly;
+  margin: 4px 0;
+  height: 7%;
+  display: flex;
+  position: relative;
+  width: 100%;
+  border-radius: 25px;
+  transition: 0.3s ease;
+  justify-content: space-evenly;
 }
 
 .search-bar input:focus {
-    outline: none;
+  outline: none;
 }
 
 .line {
-    height: 1px;
-    width: 100%;
-    background-color: black;
+  height: 1px;
+  width: 100%;
+  background-color: black;
 }
+
+.friend-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  width: 70%;
+}
+
+.friend {
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  width: 99%;
+  margin: 4px 0;
+  height: 52px;
+  /* box-shadow: 0 2px 4px rgba(0.1, 0.1, 0, 0.1); */
+}
+
+.friend:hover {
+  box-shadow: 0 2px 4px rgba(0.1, 0.1, 0, 0.1);
+  background-color: #f0f0f0;
+  width: 100%;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+}
+
+.friend:hover .friend-btn {
+  background-color: #f0f0f0;
+}
+
+.friend-btn {
+  height: 16px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #e7e8f0;
+  cursor: pointer;
+}
+.circle {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background-color: #000000;
+}
+
+.delete {
+  position: absolute;
+  right: 35px;
+  width: 60px;
+  box-shadow: 0 2px 4px rgba(0.1, 0.1, 0, 0.1);
+  text-align: center;
+  border-radius: 5px;
+  bottom: 5px;
+  display: none;
+  transition: all 0.3s ease-out;
+}
+
+.friends-list {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
