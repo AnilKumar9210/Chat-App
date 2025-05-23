@@ -1,0 +1,47 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4b5591;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.profile-container {
+  width: 35%;
+  height: 30%;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.profile-container > form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  position: relative;
+}
+
+.profile-name {
+  border: none;
+    width: 75%;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    outline: black;
+    position: relative;
+}
+
+
+.profile-container>form>textarea {
+    width: 400px;
+    height: 38px;
+    border-radius: 10px;
+    outline: none;
+}
+
+.profile-submit {
+    
+}

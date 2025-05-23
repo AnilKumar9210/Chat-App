@@ -53,4 +53,4 @@ const login = async (email,password)=> {
   }
 }
 
-export {signin,login}
+export {signin,login,auth,db}
