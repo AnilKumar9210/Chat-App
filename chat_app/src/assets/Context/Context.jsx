@@ -12,6 +12,7 @@ const AppContextProvider = (props)=> {
     const loadUserData = async (uid)=> {
         const docSnap = await getDoc (doc (db,"users",uid));
         console.log(docSnap.data ());
+        setUserData(docSnap.data ());
     }
     const value = {
         userData,

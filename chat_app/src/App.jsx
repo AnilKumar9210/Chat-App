@@ -12,6 +12,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './assets/Configuration/Firebase'
 import { Appcontext } from './assets/Context/Context'
 import Profile from './assets/Components/Profile'
+import { Component , captureOwnerStack } from 'react';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -27,7 +28,10 @@ function App() {
         navigate('/')
       }
     })
-  },[])
+  },[]);
+
+  // ErrorBoundary 
+  
 
   return (
     <div className="App">

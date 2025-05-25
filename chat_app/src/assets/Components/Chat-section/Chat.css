@@ -37,9 +37,6 @@
   border: 1px solid;
 }
 
-
-
-
 .send-img input {
   width: 40px;
   height: 40px;
@@ -51,7 +48,6 @@
   position: relative;
   height: 40px;
   width: 40px;
-  
 }
 
 .send-img svg {
@@ -84,17 +80,18 @@
   height: 82%;
   display: flex;
   flex-direction: column;
-  overflow:auto;
+  overflow: auto;
 }
 
 /* send message  */
 .r-msg {
   padding: 4px;
-  background: royalblue;
+  background: #5b80f6bd;
   border-radius: 8px 8px 0 8px;
-  word-wrap:break-word ;
+  word-wrap: break-word;
+  font-size: 14px;
+  font-weight: 300;
 }
-
 
 .send-msg {
   display: flex;
@@ -131,7 +128,6 @@
   gap: 6px;
 }
 
-
 .l-msg-profile > img {
   width: 20px;
 }
@@ -149,7 +145,9 @@
 
 .l-msg {
   padding: 4px;
-  background: royalblue;
+  background: #5b80f6bd;
   border-radius: 8px 8px 8px 0px;
-  word-wrap:break-word ;
+  word-wrap: break-word;
+  font-size: 14px;
+  font-weight: 300;
 }
