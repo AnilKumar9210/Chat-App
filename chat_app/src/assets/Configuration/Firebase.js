@@ -53,4 +53,13 @@ const login = async (email,password)=> {
   }
 }
 
-export {signin,login,auth,db}
+const logout = async ()=> {
+  try {
+    await auth.signOut();
+    toast.success ("Logged out successfully");
+  } catch (err) {
+    toast.error ("Something went wrong while logging out");
+  }
+}
+
+export {signin,login,auth,db,logout}

@@ -32,3 +32,26 @@
   right: 15px;
   cursor: pointer;
 }
+
+.logout-btn {
+  bottom: 5%;
+  position: absolute;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  background-color: #3653f8;
+  font-weight: bold;
+  height: 35px;
+  width: 80px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  font-size: 16px;
+  border: none;
+  width: 81px;
+  height: 36px;
+  transition: all 0.1s ease-in-out;
+  box-shadow: 2px 2px 7px rgb(86, 83, 83);
+}

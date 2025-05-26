@@ -4,6 +4,7 @@ import { useContext ,useState} from 'react';
 import { Appcontext } from '../../Context/Context';
 import info from '../../../assets/Images/info.svg';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../Configuration/Firebase';
 
 const RightSec = () => {
 
@@ -17,12 +18,19 @@ const RightSec = () => {
 
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
+      const realHours = hours > 12 ? hours - 12 : hours;
+      const amPm = hours >= 12 ? 'PM' : 'AM';
 
-      const formatted = `${Math.floor(hours/12)}:${minutes}`;
+      const formatted = `${realHours}:${minutes} ${amPm}`;
       setTime (formatted);
     }
     lastSeen ();
   },[]);
+
+  const handleLogout = ()=> {
+    logout ();
+    navigate ('/');
+  }
 
   const handleEditProfile = ()=> {
     navigate ('/profile');
@@ -36,7 +44,8 @@ const RightSec = () => {
       </div>
       <img src={info} style={{width:25}} alt="" className='edit' onClick={handleEditProfile} />
       <span className='bio' style={{fontSize:17}}>{userData.bio}</span>
-      <span className="lastSeen" style={{fontSize:14}}>{time} AM</span>      
+      <span className="lastSeen" style={{fontSize:14}}>{time}</span>  
+      <button className='logout-btn' onClick={handleLogout}>Log out</button>    
     </div>
   )
 }

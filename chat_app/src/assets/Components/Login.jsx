@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState ,useContext} from 'react'
 import './Login.css'
 import background from '../Images/background1.svg'
 import chatting from '../Images/chating.png'
 import { useNavigate } from 'react-router-dom'  
 import { signin,login } from '../Configuration/Firebase'
+import { Appcontext } from '../Context/Context'
 
 const Login = () => {
+  const {userData} = useContext (Appcontext)
   const navigate = useNavigate ();
   const [username,setUserName] = useState ("");
   const [email,setEmail] = useState ("");
@@ -23,7 +25,11 @@ const Login = () => {
     } else {
       login (email,password);
     }
-    navigate ('/chat');
+    if (userData.name && userData.email) {
+      navigate ('/chat');
+    } else {
+      navigate ('/profile');
+    }
   }
 
   const handleChange = (value,name)=> {

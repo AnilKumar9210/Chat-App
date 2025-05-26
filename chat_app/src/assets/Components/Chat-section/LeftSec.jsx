@@ -1,10 +1,12 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import React from 'react'
 import './LeftSec.css'
 
 const LeftSec = () => {
 
   const optsRef = useRef(null);
+  const [searchInput,setSearchInput] = useState (null);
+  const [search,setSearch] = useState (false);
   const handleOpts = () => {
     if (optsRef.current.style.display === 'block') {
       optsRef.current.style.display = 'none';
@@ -12,11 +14,16 @@ const LeftSec = () => {
       optsRef.current.style.display = 'block';
     }
   }
+
+  const handleSearch = async (e) => {
+    setSearchInput (e.target.value);
+  }
+
   return (
     <div className='left-sec'>
       <div className="search-bar">
         <img src="https://cdn.hugeicons.com/icons/search-01-stroke-standard.svg" alt="x" />
-        <input type="text" name='search'placeholder='search'/>
+        <input type="text" name='search'placeholder='search'onChange={handleSearch}/>
       </div>
       <div className="line"></div>
       <div className="friends-list">
