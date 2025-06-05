@@ -22,7 +22,7 @@ const Profile = () => {
     errorRef.current.style.display = "none";
     const updatedData = {
       ...userData,
-      name:name,
+      name:name.toLowerCase (),
       bio:bio,
       lastSeen:Date.now ().toString (),
     }
