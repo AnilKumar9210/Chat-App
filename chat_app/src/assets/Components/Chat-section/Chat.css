@@ -151,3 +151,26 @@
   font-size: 14px;
   font-weight: 300;
 }
+
+
+.no-chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-chat img {
+  width: 300px;
+  height: 300px;
+}
+
+.no-chat>div {
+  width: 500px;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+}
+
+.no-chat span {
+  font-weight: 100;
+}

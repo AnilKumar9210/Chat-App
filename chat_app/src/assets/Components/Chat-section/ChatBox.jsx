@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import RightSec from './RightSec'
 import LeftSec from './LeftSec'
 import Chat from './Chat'
 import './ChatBox.css'
 import { Component, captureOwnerStack } from 'react'
+import { Appcontext } from '../../Context/Context'
 
 const ChatBox = () => {
 

@@ -1,6 +1,7 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
 import {doc,getDoc, onSnapshot, updateDoc} from 'firebase/firestore'
+
 import { auth, db } from "../Configuration/Firebase";
 export const Appcontext = createContext ();
 
@@ -9,12 +10,15 @@ const AppContextProvider = (props)=> {
     const [userData,setUserData] = useState (null);
     // const [chat,setChat] = useState (null);
     const [chatData,setChatData] = useState (null);
+    const [messageId,setMessageId] = useState (null);
+    const [messages,setMessages] = useState (null);
+    const [chatUser,setChatUser] = useState (null);
 
     const loadUserData = async (uid)=> {
         const docSnap = await getDoc (doc (db,"users",uid));
         // console.log(docSnap.data ());
         setInterval (async ()=> {
-            if (auth.chatUser) {
+            if (auth.currentUser) {
                 await updateDoc (doc (db,"users",uid),{
                     lastSeen:Date.now (),
                 })
@@ -26,19 +30,18 @@ const AppContextProvider = (props)=> {
     useEffect (()=> {
         if (userData) {
             const chatRef = doc (db,"userChats",userData.id);
-            const unSub = onSnapshot (chatRef, async (doc)=> {
-                const chats = doc.data ().chatData;
+            const unSub = onSnapshot (chatRef, async (docs)=> {
+                const chats = docs.data ().chatData;
                 const tempData = [];
-                for (const key in chats) {
-                    const userSnap = await getDoc(doc (db,"chats",key.rId));
+                for (const key of chats) {
+                    const userRef = doc(db,"userChats",key.rId);
+                    const userSnap = await getDoc (userRef);
                     const userData = userSnap.data ();
                     tempData.push ({
                         ...key,
                         userData,
                     })
-                    console.log(tempData,"Ehlow")
-                    setChatData (tempData.sort ((a,b)=>a.updatedAt - b.updatedAt));
-                    // setChatData (tempData)
+                    setChatData (tempData.sort ((a,b)=>b.updatedAt - a.updatedAt));
                 }
             })
 
@@ -48,12 +51,15 @@ const AppContextProvider = (props)=> {
         } else {
             setChatData (null);
         }
-    },[]);
+    },[userData]);
     const value = {
         userData,
         setUserData,
         chatData,
-        setChatData,loadUserData
+        setChatData,loadUserData,
+        messages,setMessages,
+        messageId,setMessageId,
+        chatUser,setChatUser,
     }
 
     return (

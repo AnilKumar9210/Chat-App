@@ -1,40 +1,107 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Chat.css";
 import { useRef } from "react";
+import { Appcontext } from "../../Context/Context";
+import chatting from "../../Images/chating.png";
+import { TypeAnimation } from "react-type-animation";
 
 const Chat = () => {
-  
-  const handleSend = ()=> {
-    
-  }
-  return (
+  const { chatUser, messageId, userData, messages, setMessages } =
+    useContext(Appcontext);
+  // const [chatUser, setChatUser] = useState(false);
+  const [welcome, setWelcome] = useState("");
+  const [start, setStart] = useState("");
+  const [index, setIndex] = useState(0);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const msg1 = "Welcome to online chat app....";
+    let index = 0;
+    const interval1 = setInterval(() => {
+      setWelcome((prev) => prev + msg1[index]);
+      index++;
+      if (index >= msg1.length) {
+        clearInterval(interval1);
+        setTimeout(() => {
+          setDone(true);
+        }, 300);
+      }
+    }, 100);
+    return () => clearInterval(interval1);
+  }, []);
+
+  useEffect(() => {
+    if (!done) {
+      return;
+    } else {
+      const msg1 = "Tap on your friend to start a conversatoin....";
+      let index = 0;
+      const interval1 = setInterval(() => {
+        setStart((prev) => prev + msg1[index]);
+        index++;
+        if (index >= msg1.length) {
+          clearInterval(interval1);
+        }
+      }, 100);
+      return () => clearInterval(interval1);
+    }
+  }, [done]);
+
+  const handleSend = () => {};
+  return !chatUser ? (
+    <div className="no-chat">
+      <div>
+        <img src={chatting} alt="" />
+        {/* <span>{welcome}</span>
+        <span>{start}</span> */}
+        <TypeAnimation
+          sequence={[
+            "Welcome to online chat app....",
+            1000,
+            "Tap on your friend to start a conversatoin....",
+            1000,
+          ]}
+          wrapper="span"
+          speed={50}
+          style={{ fontWeight: "lighter", display: "inline-block" }}
+          repeat={Infinity}
+        />
+      </div>
+    </div>
+  ) : (
     <div className="chat">
       <div className="title">
         <img
           src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
           alt="profile"
         />
-        <span>John Doe</span>
+        <span onClick={()=> {console.log(chatUser)}}>{chatUser.userData.userName}</span>
       </div>
 
       <div className="chat-msg">
         <div className="send-msg">
           <div className="r-msg">
-          <span>Lorem ipsum dolor sit amet consectetur... </span>
+            <span>Lorem ipsum dolor sit amet consectetur... </span>
           </div>
           <div className="r-msg-profile">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              alt=""
+            />
             <span>12:30 PM</span>
           </div>
         </div>
 
         <div className="receive-msg">
           <div className="l-msg-profile">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              alt=""
+            />
             <span>12:30 PM</span>
           </div>
           <div className="l-msg">
-          <span>Lorem ipsum dolor sit amet consectetur... </span>
+            <span>Lorem ipsum dolor sit amet consectetur... </span>
           </div>
         </div>
       </div>
