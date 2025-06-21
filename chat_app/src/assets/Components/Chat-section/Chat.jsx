@@ -4,6 +4,15 @@ import { useRef } from "react";
 import { Appcontext } from "../../Context/Context";
 import chatting from "../../Images/chating.png";
 import { TypeAnimation } from "react-type-animation";
+import {
+  onSnapshot,
+  doc,
+  updateDoc,
+  arrayUnion,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "../../Configuration/Firebase";
+import { toast } from "react-toastify";
 
 const Chat = () => {
   const { chatUser, messageId, userData, messages, setMessages } =
@@ -11,8 +20,10 @@ const Chat = () => {
   // const [chatUser, setChatUser] = useState(false);
   const [welcome, setWelcome] = useState("");
   const [start, setStart] = useState("");
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(null);
   const [done, setDone] = useState(false);
+  const [input, setInput] = useState("");
+  const [toggle,setToggle] = useState(true);
 
   useEffect(() => {
     const msg1 = "Welcome to online chat app....";
@@ -47,9 +58,67 @@ const Chat = () => {
     }
   }, [done]);
 
-  const handleSend = () => {};
-  return !chatUser ? (
-    <div className="no-chat">
+
+  // fetching messages from firestore
+  useEffect(() => {
+  if (!messageId) return;
+
+  const unSub = onSnapshot(doc(db, "messages", messageId), (res) => {
+    const newMessages = [...(res.data().messages || [])].reverse();
+
+    setMessages((prev) => {
+      const same =
+        JSON.stringify(prev) === JSON.stringify(newMessages);
+      return same ? prev : newMessages;
+    });
+  });
+
+  return () => unSub();
+}, [messageId]);
+
+
+
+
+  const handleSend = async () => {
+    try {
+      if (input && messageId) {
+        await updateDoc(doc(db, "messages", messageId), {
+          messages: arrayUnion({
+            sId: userData.id,
+            text: input,
+            createdAt: new Date(),
+          }),
+        });
+
+        const userIds = [userData.id, chatUser.rId];
+
+        userIds.forEach(async (id) => {
+          const userChatsRef = doc(db, "chatData", id);
+          const userChatsSnapshot = await getDoc(userChatsRef);
+          if (userChatsSnapshot.exists()) {
+            const userChatData = userChatsSnapshot.data();
+            const chatIndex = userChatData.chatData.findIndex(
+              (c) => c.messageId === messageId
+            );
+            userChatData.chatData[chatIndex].lastMessage =
+              input.slice(0, 20) + " ";
+            userChatData.chatData[chatIndex].createdAt = new Date();
+            if (userChatData.chatData[chatIndex].rId === userData.id) {
+              userChatData.chatData[chatIndex].messageSeen = false;
+            }
+
+            await updateDoc(userChatsRef, {
+              chatData: userChatData.chatData,
+            });
+            setInput("");
+          }
+        });
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+  return !chatUser? (<div className="no-chat">
       <div>
         <img src={chatting} alt="" />
         {/* <span>{welcome}</span>
@@ -67,6 +136,7 @@ const Chat = () => {
           repeat={Infinity}
         />
       </div>
+      
     </div>
   ) : (
     <div className="chat">
@@ -75,39 +145,46 @@ const Chat = () => {
           src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
           alt="profile"
         />
-        <span onClick={()=> {console.log(chatUser)}}>{chatUser.userData.userName}</span>
+        <span
+          onClick={() => {
+            console.log(chatUser);
+          }}
+        >
+          {chatUser.userName}
+        </span>
       </div>
 
       <div className="chat-msg">
-        <div className="send-msg">
-          <div className="r-msg">
-            <span>Lorem ipsum dolor sit amet consectetur... </span>
-          </div>
-          <div className="r-msg-profile">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-              alt=""
-            />
-            <span>12:30 PM</span>
-          </div>
-        </div>
-
-        <div className="receive-msg">
-          <div className="l-msg-profile">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-              alt=""
-            />
-            <span>12:30 PM</span>
-          </div>
-          <div className="l-msg">
-            <span>Lorem ipsum dolor sit amet consectetur... </span>
-          </div>
-        </div>
+        {messages.map((msg, index) => {
+          return (
+            <div
+              className={userData.id != msg.sId ? "receive-msg" : "send-msg"}
+              key={index}
+            >
+              <div className="msg-profile">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                  alt=""
+                />
+                <span>12:30 PM</span>
+              </div>
+              <div className="msg">
+                <span>{msg.text}</span>
+              </div>
+            </div>
+           ); 
+        })}
       </div>
 
       <div className="send">
-        <input type="text" placeholder="Type a message..." />
+        <input
+          type="text"
+          placeholder="Type a message..."
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+          }}
+        />
         <div className="send-img">
           <svg
             xmlns="http://www.w3.org/2000/svg"

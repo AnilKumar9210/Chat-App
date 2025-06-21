@@ -35,18 +35,18 @@ const ChatBox = () => {
   return (
     <div className='chat-box'>
       <ErrorBoundary fallback={<div class="spinner center">
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
-    <div class="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
+    <div className="spinner-blade"></div>
 </div>}>
       <LeftSec/>
       <Chat/>

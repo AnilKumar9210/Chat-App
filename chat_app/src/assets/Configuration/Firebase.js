@@ -4,6 +4,8 @@ import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, setDoc ,doc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { Appcontext } from "../Context/Context";
+import { useContext } from "react";
 const firebaseConfig = {
   apiKey: "AIzaSyBxMF_UkGpeQjMIOBj8CCCBeap3-TWAopQ",
   authDomain: "chat-app-c2551.firebaseapp.com",
@@ -19,7 +21,8 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
+const {setChatUser} = useContext(Appcontext)
+ 
 const signin = async (username,email,password)=> {
     try {
         const res = await createUserWithEmailAndPassword(auth,email,password);
@@ -29,7 +32,7 @@ const signin = async (username,email,password)=> {
           bio:"Hey there! I am using Chat App",
           profilePic:"",
           id:res.user.uid,
-          name:"",
+          name:username,
           lastSeen:Date.now (),
         })
 
@@ -57,6 +60,7 @@ const logout = async ()=> {
   try {
     await auth.signOut();
     toast.success ("Logged out successfully");
+    setChatUser (null);
   } catch (err) {
     toast.error ("Something went wrong while logging out");
   }

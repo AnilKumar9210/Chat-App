@@ -32,16 +32,16 @@ const Login = () => {
     }
   }
 
-  const handleChange = (value,name)=> {
-    if (name === 'name') {
-      nameRef.current.style.display = 'none';
-    } else if (name === 'email') {
-      emailRef.current.style.display = 'none';
-    } else {
-      passwordRef.current.style.display = 'none';
-    }
-    setDetails ((prev)=>({...prev,[name]:value}));
-  }
+  // const handleChange = (value,name)=> {
+  //   if (name === 'name') {
+  //     nameRef.current.style.display = 'none';
+  //   } else if (name === 'email') {
+  //     emailRef.current.style.display = 'none';
+  //   } else {
+  //     passwordRef.current.style.display = 'none';
+  //   }
+  //   setDetails ((prev)=>({...prev,[name]:value}));
+  // }
   return (
     <div className="login-container">
         <img src={chatting} alt="nothing" className="back"/>
