@@ -11,6 +11,7 @@ const RightSec = () => {
   const navigate = useNavigate ();
   const {userData} = useContext (Appcontext);
   const [time,setTime] = useState ("yesterDay");
+  const {setChatUser} = useContext (Appcontext);
 
   useEffect (()=> {
     const lastSeen =  ()=> {
@@ -29,10 +30,12 @@ const RightSec = () => {
 
   const handleLogout = ()=> {
     logout ();
+    setChatUser (null);
     navigate ('/');
   }
 
   const handleEditProfile = ()=> {
+
     navigate ('/profile');
   }
   return (

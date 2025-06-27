@@ -33,6 +33,7 @@ const LeftSec = () => {
   useEffect(() => {
     if (user) {
       console.log(user);
+      
     }
   }, [user]);
 
@@ -52,33 +53,22 @@ const LeftSec = () => {
       if (input.length > 0) {
         setSearch(true);
         const userRef = collection(db, "users");
+        // console.log(userRef.i)
         const q = query(userRef, where("name", "==", input.toLowerCase()));
         const querySnap = await getDocs(q);
         if (!querySnap.empty && querySnap.docs[0].data().id != userData.id) {
-          console.log(showSearch);
+          console.log(chatData);
           const foundUser = querySnap.docs[0].data();
           console.log(foundUser);
-          // const userExist = chatData.some((chatUser) => chatUser.rId === foundUser.id);
           let userExist = false;
           chatData.map((user) => {
             if (user.rId == foundUser.id) {
               userExist = true;
             }
           });
-          console.log(
-            userExist ? "Hello user exist" : "Hello user does not exist"
-          );
-          // console.log(userExist,foundUser.id,userData.id,foundUser,"HEllo world")
           if (!userExist) {
-            setUser((prev) => {
-              prev = foundUser;
-              return prev;
-            });
+            setUser(foundUser);
           }
-          console.log(user);
-          // if (!userExist) {
-          //   setUser (foundUser);
-          // }
         } else {
           setUser(null);
         }
@@ -97,6 +87,7 @@ const LeftSec = () => {
       const newMessageRef = doc(messageRef);
 
       await setDoc(newMessageRef, {
+        participants:[userData.id,user.id],
         createdAt: serverTimestamp(),
         messages: [],
       });

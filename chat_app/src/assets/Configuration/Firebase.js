@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const {setChatUser} = useContext(Appcontext)
+// const {setChatUser} = useContext(Appcontext)
  
 const signin = async (username,email,password)=> {
     try {
@@ -60,7 +60,7 @@ const logout = async ()=> {
   try {
     await auth.signOut();
     toast.success ("Logged out successfully");
-    setChatUser (null);
+    // setChatUser (null);
   } catch (err) {
     toast.error ("Something went wrong while logging out");
   }

@@ -8,7 +8,7 @@ export const Appcontext = createContext();
 const AppContextProvider = (props) => {
   const [userData, setUserData] = useState(null);
   // const [chat,setChat] = useState (null);
-  const [chatData, setChatData] = useState(null);
+  const [chatData, setChatData] = useState([]);
   const [messageId, setMessageId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [chatUser, setChatUser] = useState(null);
@@ -62,15 +62,17 @@ const AppContextProvider = (props) => {
         const chats = docs.data().chatData;
         const tempData = [];
         for (const key of chats) {
-          const userRef = doc(db, "userChats", key.rId);
+          const userRef = doc(db, "users", key.rId.trim ());
           const userSnap = await getDoc(userRef);
           const userData = userSnap.data();
+          console.log(userData)
           tempData.push({
             ...key,
             userData,
           });
-          setChatData(tempData.sort((a, b) => b.updatedAt - a.updatedAt));
+          console.log(tempData)
         }
+        setChatData(tempData.sort((a, b) => b.updatedAt - a.updatedAt));
       });
 
       return () => {
