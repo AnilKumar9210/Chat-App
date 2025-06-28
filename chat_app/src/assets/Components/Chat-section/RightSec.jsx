@@ -11,7 +11,7 @@ const RightSec = () => {
   const navigate = useNavigate ();
   const {userData} = useContext (Appcontext);
   const [time,setTime] = useState ("yesterDay");
-  const {setChatUser} = useContext (Appcontext);
+  const {setChatUser,setUserData,setChatData} = useContext (Appcontext);
 
   useEffect (()=> {
     const lastSeen =  ()=> {
@@ -31,6 +31,9 @@ const RightSec = () => {
   const handleLogout = ()=> {
     logout ();
     setChatUser (null);
+  setUserData (null);
+  setChatData([]);
+  setChatUser(null);
     navigate ('/');
   }
 

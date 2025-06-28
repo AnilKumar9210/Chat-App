@@ -3,7 +3,7 @@ import './Login.css'
 import background from '../Images/background1.svg'
 import chatting from '../Images/chating.png'
 import { useNavigate } from 'react-router-dom'  
-import { signin,login } from '../Configuration/Firebase'
+import { signin,login,resetPassword } from '../Configuration/Firebase'
 import { Appcontext } from '../Context/Context'
 
 const Login = () => {
@@ -81,6 +81,7 @@ const Login = () => {
           </div>}
       </form>
       <span className={`${!signIn ? 'none' : 'sign-in'}`} >if you don't have an account <span onClick={()=> (setSignIn ((prev)=> (!prev)))}>sign in</span></span>
+      <span className={`${!signIn ? 'none' : 'sign-in'}`} >Forgot password ? <span onClick={()=> {resetPassword (email)}}>reset here</span></span>
 {/* {signIn ? <button className='login-button' onClick={onSubmitHandler}>
   <span class="span-mother">
     <span>L</span>
@@ -115,6 +116,7 @@ const Login = () => {
     <span>n</span>
   </span>
 </button>} */}
+{}
 
     </div>
     </div>

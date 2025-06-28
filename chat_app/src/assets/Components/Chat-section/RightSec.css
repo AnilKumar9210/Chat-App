@@ -1,11 +1,11 @@
 .right-sec {
   position: relative;
-  background-color: #e7e8f0;
+  background-color: #32465a;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 70%; */
+  color: white;
 }
 
 .current-friend {

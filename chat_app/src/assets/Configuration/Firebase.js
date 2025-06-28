@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, setDoc ,doc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, setDoc ,doc, collection, query, where, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { Appcontext } from "../Context/Context";
 import { useContext } from "react";
@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-// const {setChatUser} = useContext(Appcontext)
+// const {setChatUser,setuserData,setChatData} = useContext(Appcontext)
  
 const signin = async (username,email,password)=> {
     try {
@@ -66,4 +66,27 @@ const logout = async ()=> {
   }
 }
 
-export {signin,login,auth,db,logout}
+const resetPassword = async (email)=> {
+  if (!email) {
+    toast.error ("Please enter your email");
+    return;
+  }
+  try {
+    const userRef = collection (db,"users");
+    const q = query (userRef,where ("email","==",email));
+    const userSnapshot = await getDocs (q);
+    if (userSnapshot.empty) {
+      toast.error ("User not found");
+      return;
+    } else {
+
+      await sendPasswordResetEmail (auth,email);
+      toast.success ("reset email sent");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error (error.message);
+  }
+}
+
+export {signin,login,auth,db,logout,resetPassword}

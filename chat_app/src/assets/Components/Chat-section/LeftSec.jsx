@@ -92,6 +92,7 @@ const LeftSec = () => {
         messages: [],
       });
 
+
       await updateDoc(doc(chatRef, user.id), {
         chatData: arrayUnion({
           rId: userData.id,
@@ -102,7 +103,6 @@ const LeftSec = () => {
           userName: userData.name,
         }),
       });
-      console.log(user.name, userData.name);
 
       await updateDoc(doc(chatRef, userData.id), {
         chatData: arrayUnion({
@@ -116,7 +116,8 @@ const LeftSec = () => {
       });
     } catch (error) {
       console.error(error);
-      toast.error(error.code.split("/")[1].split("-").join(" "));
+      // toast.error(error.code.split("/")[1].split("-").join(" "));
+      toast.error("Error adding chat");
     }
     setSearch(false);
   };
@@ -153,14 +154,7 @@ const LeftSec = () => {
               />
               <span>{user.name}</span>
             </div>
-            <button onClick={handleOpts} className="friend-btn">
-              <span className="circle"></span>
-              <span className="circle"></span>
-              <span className="circle"></span>
-            </button>
-            <div className="delete" ref={optsRef}>
-              Delete
-            </div>
+            
           </div>
         ) : (
           <div className="no-user">No user found</div>
@@ -175,16 +169,19 @@ const LeftSec = () => {
                   alt="x"
                   style={{ height: 40 }}
                 />
-                <span>{item.userName}</span>
               </div>
-              <button onClick={handleOpts} className="friend-btn">
+              <div className="userInfo">
+                <span>{item.userName}</span>
+              {/* <span className="lastMsg">last message</span> */}
+              </div>
+              {/* {button onClick={handleOpts} className="friend-btn">
                 <span className="circle"></span>
                 <span className="circle"></span>
                 <span className="circle"></span>
               </button>
               <div className="delete" ref={optsRef}>
                 Delete
-              </div>
+              </div>} */}
             </div>
           ))}
         </div>

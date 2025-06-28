@@ -6,6 +6,7 @@
 .chat {
   position: relative;
   /* height: 70%; */
+  background-color: #d7d7d5;
 }
 
 .title img {
@@ -18,9 +19,9 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  height: 8%;
+  height: 7%;
   position: relative;
-  background: #d7d7d5;
+  background: white;
   padding: 4px;
 }
 
@@ -31,12 +32,13 @@
   width: 40vw;
   height: 6%;
   position: sticky;
+  background-color: white;
 }
 
 .send input {
-  width: 72%;
-  border-radius: 12px;
-  border: 1px solid;
+  width: 100%;
+  border: white;
+  outline: white;
 }
 
 .send-img input {
@@ -86,7 +88,7 @@
 }
 
 /* send message  */
-.receive-msg>.msg {
+.receive-msg > .msg {
   padding: 4px;
   background: #5b80f6bd;
   border-radius: 8px 8px 8px 0;
@@ -103,19 +105,18 @@
   gap: 6px;
 }
 
-
-.receive-msg>.msg-profile > img {
+.receive-msg > .msg-profile > img {
   width: 20px;
 }
 
-.receive-msg>.msg-profile {
+.receive-msg > .msg-profile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.receive-msg>.msg-profile > span {
+.receive-msg > .msg-profile > span {
   font-size: 0.6rem;
 }
 
@@ -132,34 +133,33 @@
   grid-template-areas: "msg msg-profile";
 }
 
-.send-msg>.msg-profile > img {
+.send-msg > .msg-profile > img {
   width: 20px;
 }
 
-.send-msg>.msg-profile {
+.send-msg > .msg-profile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   align-self: flex-end;
   grid-area: msg-profile;
-  
 }
 
-.send-msg>.msg-profile > span {
+.send-msg > .msg-profile > span {
   font-size: 0.6rem;
 }
 
-.send-msg>.msg {
+.send-msg > .msg {
   padding: 4px;
-  background: #5b80f6bd;
+  background-color: white;
   border-radius: 8px 8px 0 8px;
   word-wrap: break-word;
   font-size: 14px;
   font-weight: 300;
   grid-area: msg;
+  /* background-color: #d7d7d5; */
 }
-
 
 .no-chat {
   display: flex;
@@ -172,7 +172,7 @@
   height: 300px;
 }
 
-.no-chat>div {
+.no-chat > div {
   width: 500px;
   align-items: center;
   display: flex;
