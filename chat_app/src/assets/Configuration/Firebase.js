@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-// const {setChatUser,setuserData,setChatData} = useContext(Appcontext)
+// const {setChatUser,setUserData,setChatData} = useContext(Appcontext)
  
 const signin = async (username,email,password)=> {
     try {
@@ -50,6 +50,12 @@ const login = async (email,password)=> {
     const res = await signInWithEmailAndPassword (auth,email,password);
     const user = res.user;
 
+    const userDoc = await getDocs(query(collection(db, "users"), where("id", "==", user.uid)));
+    if (!userDoc.empty) {
+      const userData = userDoc.docs[0].data();
+      // set user data in context
+      return userData;
+    }
   } catch (error) {
     console.error (error);
     toast.error (error.code.split("/")[1].split("-").join (" "));

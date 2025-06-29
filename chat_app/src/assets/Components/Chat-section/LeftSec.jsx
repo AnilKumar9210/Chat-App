@@ -81,46 +81,82 @@ const LeftSec = () => {
   };
 
   const addChat = async () => {
-    const messageRef = collection(db, "messages");
-    const chatRef = collection(db, "userChats");
-    try {
-      const newMessageRef = doc(messageRef);
+  const messageRef = collection(db, "messages");
+  const chatRef = collection(db, "userChats");
 
-      await setDoc(newMessageRef, {
-        participants:[userData.id,user.id],
-        createdAt: serverTimestamp(),
-        messages: [],
-      });
+  try {
+    const newMessageRef = doc(messageRef);
+
+    await setDoc(newMessageRef, {
+      participants: [userData.id, user.id],
+      createdAt: serverTimestamp(),
+      messages: [],
+    });
+
+    // ✅ Only update YOUR userChats document
+    await updateDoc(doc(chatRef, userData.id), {
+      chatData: arrayUnion({
+        rId: user.id,
+        messageSeen: true,
+        messageId: newMessageRef.id,
+        lastSeen: "",
+        updatedAt: Date.now(),
+        userName: user.name,
+      }),
+    });
+
+    // ❌ SKIP updating user.id's userChats doc — you’re not allowed
+    // They will see the chat once they send/receive messages or open the chat screen
+
+  } catch (error) {
+    console.error(error);
+    toast.error("Error adding chat");
+  }
+
+  setSearch(false);
+};
+
+  // const addChat = async () => {
+  //   const messageRef = collection(db, "messages");
+  //   const chatRef = collection(db, "userChats");
+  //   try {
+  //     const newMessageRef = doc(messageRef);
+
+  //     await setDoc(newMessageRef, {
+  //       participants:[userData.id,user.id],
+  //       createdAt: serverTimestamp(),
+  //       messages: [],
+  //     });
 
 
-      await updateDoc(doc(chatRef, user.id), {
-        chatData: arrayUnion({
-          rId: userData.id,
-          messageSeen: true,
-          messageId: newMessageRef.id,
-          lastSeen: "",
-          updatedAt: Date.now(),
-          userName: userData.name,
-        }),
-      });
+  //     await updateDoc(doc(chatRef, user.id), {
+  //       chatData: arrayUnion({
+  //         rId: userData.id,
+  //         messageSeen: true,
+  //         messageId: newMessageRef.id,
+  //         lastSeen: "",
+  //         updatedAt: Date.now(),
+  //         userName: userData.name,
+  //       }),
+  //     });
 
-      await updateDoc(doc(chatRef, userData.id), {
-        chatData: arrayUnion({
-          rId: user.id,
-          messageSeen: true,
-          messageId: newMessageRef.id,
-          lastSeen: "",
-          updatedAt: Date.now(),
-          userName: user.name,
-        }),
-      });
-    } catch (error) {
-      console.error(error);
-      // toast.error(error.code.split("/")[1].split("-").join(" "));
-      toast.error("Error adding chat");
-    }
-    setSearch(false);
-  };
+  //     await updateDoc(doc(chatRef, userData.id), {
+  //       chatData: arrayUnion({
+  //         rId: user.id,
+  //         messageSeen: true,
+  //         messageId: newMessageRef.id,
+  //         lastSeen: "",
+  //         updatedAt: Date.now(),
+  //         userName: user.name,
+  //       }),
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //     // toast.error(error.code.split("/")[1].split("-").join(" "));
+  //     toast.error("Error adding chat");
+  //   }
+  //   setSearch(false);
+  // };
 
   const setChat = (item) => {
     setMessageId(item.messageId);

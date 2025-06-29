@@ -7,7 +7,7 @@ import { signin,login,resetPassword } from '../Configuration/Firebase'
 import { Appcontext } from '../Context/Context'
 
 const Login = () => {
-  const {userData} = useContext (Appcontext)
+  const {userData,setUserData} = useContext (Appcontext)
   const navigate = useNavigate ();
   const [username,setUserName] = useState ("");
   const [email,setEmail] = useState ("");
@@ -18,12 +18,15 @@ const Login = () => {
   const emailRef = useRef ();
   const passwordRef = useRef ();
 
-  const onSubmitHandler = (e)=> {
+  const onSubmitHandler = async (e)=> {
     e.preventDefault ();
     if (!signIn){
       signin (username,email,password);
     } else {
-      login (email,password);
+      const res = await login (email,password);
+      if (res) {
+        setUserData (res)
+      }
     }
     if (userData.name && userData.email) {
       navigate ('/chat');
