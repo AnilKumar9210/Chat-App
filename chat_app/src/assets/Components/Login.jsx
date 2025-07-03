@@ -20,10 +20,13 @@ const Login = () => {
 
   const onSubmitHandler = async (e)=> {
     e.preventDefault ();
+    let done = false;
     if (!signIn){
       signin (username,email,password);
+      done = true;
     } else {
       const res = await login (email,password);
+      done = true;
       if (res) {
         setUserData (res)
       }
@@ -32,6 +35,11 @@ const Login = () => {
       navigate ('/chat');
     } else {
       navigate ('/profile');
+    }
+    if (done){
+      setEmail ("");
+      setPassword ("");
+      setUserName ("");
     }
   }
 

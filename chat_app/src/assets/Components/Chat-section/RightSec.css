@@ -55,3 +55,10 @@
   transition: all 0.1s ease-in-out;
   box-shadow: 2px 2px 7px rgb(86, 83, 83);
 }
+
+
+.profil-max {
+  width: 65px;
+  height: 65px;
+  font-size: 40px;
+}

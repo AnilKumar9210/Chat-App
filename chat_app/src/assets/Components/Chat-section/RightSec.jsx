@@ -44,7 +44,7 @@ const RightSec = () => {
   return (
     <div className='right-sec'>
       <div className="current-friend">
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="profile" style={{width:100}} />
+        <span className="profile-letter profile-max">{userData.name[0].toUpperCase()}</span>
         <h1>{userData.name}</h1>
       <div className="status"></div>
       </div>

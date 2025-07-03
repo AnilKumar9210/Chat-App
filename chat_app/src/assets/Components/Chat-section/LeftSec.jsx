@@ -200,11 +200,7 @@ const LeftSec = () => {
           {chatData?.map((item, index) => (
             <div className="friend" key={index} onClick={() => setChat(item)}>
               <div className="friend-info">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                  alt="x"
-                  style={{ height: 40 }}
-                />
+                <span className="profile-letter">{item.userName[0].toUpperCase()}</span>
               </div>
               <div className="userInfo">
                 <span>{item.userName}</span>

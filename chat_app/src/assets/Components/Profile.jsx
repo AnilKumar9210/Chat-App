@@ -41,7 +41,7 @@ const Profile = () => {
   return (
     <div className='profile'>
       <div className="profile-container">
-        <h1>Create your profile</h1>
+        <h1>update your profile</h1>
         <form class="content__form">
         <div class="content__inputs">
           <label>

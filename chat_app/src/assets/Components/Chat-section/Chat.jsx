@@ -141,10 +141,7 @@ const Chat = () => {
   ) : (
     <div className="chat">
       <div className="title">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-          alt="profile"
-        />
+        <span className="profile-letter chat-letter">{chatUser.userName[0].toUpperCase()}</span>
         <span
           onClick={() => {
             console.log(chatUser);
@@ -162,10 +159,7 @@ const Chat = () => {
               key={index}
             >
               <div className="msg-profile">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                  alt=""
-                />
+                <span className="profile-letter">{userData.name[0].toUpperCase()}</span>
                 <span>12:30 PM</span>
               </div>
               <div className="msg">
