@@ -15,15 +15,20 @@ import { db } from "../../Configuration/Firebase";
 import { toast } from "react-toastify";
 
 const Chat = () => {
-  const { chatUser, messageId, userData, messages, setMessages } =
+  const { chatUser, messageId, userData, messages, setMessages,user } =
     useContext(Appcontext);
   // const [chatUser, setChatUser] = useState(false);
   const [welcome, setWelcome] = useState("");
   const [start, setStart] = useState("");
-  const [index, setIndex] = useState(null);
   const [done, setDone] = useState(false);
   const [input, setInput] = useState("");
-  const [toggle,setToggle] = useState(true);
+  const chatRef = useRef (null);
+
+  useEffect (()=> {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  },[messages])
 
   useEffect(() => {
     const msg1 = "Welcome to online chat app....";
@@ -77,6 +82,11 @@ const Chat = () => {
 }, [messageId]);
 
 
+  useEffect (()=>{
+    console.log(messages,userData)
+  },[messages])
+
+
 
 
   const handleSend = async () => {
@@ -91,21 +101,22 @@ const Chat = () => {
         });
 
         const userIds = [userData.id, chatUser.rId];
+        console.log(user);
 
         userIds.forEach(async (id) => {
-          const userChatsRef = doc(db, "chatData", id);
+          const userChatsRef = doc(db, "userChats", id);
           const userChatsSnapshot = await getDoc(userChatsRef);
           if (userChatsSnapshot.exists()) {
             const userChatData = userChatsSnapshot.data();
             const chatIndex = userChatData.chatData.findIndex(
               (c) => c.messageId === messageId
             );
-            userChatData.chatData[chatIndex].lastMessage =
-              input.slice(0, 20) + " ";
+            userChatData.chatData[chatIndex].lastMessage = input.slice(0, 20) + " ";
             userChatData.chatData[chatIndex].createdAt = new Date();
             if (userChatData.chatData[chatIndex].rId === userData.id) {
               userChatData.chatData[chatIndex].messageSeen = false;
             }
+            console.log("updated chat data", userChatData.chatData[chatIndex]);
 
             await updateDoc(userChatsRef, {
               chatData: userChatData.chatData,
@@ -118,6 +129,48 @@ const Chat = () => {
       toast.error(err);
     }
   };
+  
+//   const handleSend = async () => {
+//   try {
+//     if (input && messageId) {
+//       // 1. Add message to messages/{messageId} doc
+//       await updateDoc(doc(db, "messages", messageId), {
+//         messages: arrayUnion({
+//           sId: userData.id,
+//           text: input,
+//           createdAt: new Date(),
+//         }),
+//       });
+
+//       // 2. Update YOUR OWN userChats/{userData.id}
+//       const userChatsRef = doc(db, "userChats", userData.id);
+//       const userChatsSnapshot = await getDoc(userChatsRef);
+
+//       if (userChatsSnapshot.exists()) {
+//         const userChatData = userChatsSnapshot.data();
+//         const chatIndex = userChatData.chatData.findIndex(
+//           (c) => c.messageId === messageId
+//         );
+
+//         if (chatIndex !== -1) {
+//           userChatData.chatData[chatIndex].lastMessage =
+//             input.slice(0, 20) + " ";
+//           userChatData.chatData[chatIndex].createdAt = new Date();
+
+//           await updateDoc(userChatsRef, {
+//             chatData: userChatData.chatData,
+//           });
+//         }
+//       }
+
+//       setInput("");
+//     }
+//   } catch (err) {
+//     toast.error(err.message || "Error sending message");
+//   }
+// };
+
+  
   return !chatUser? (<div className="no-chat">
       <div>
         <img src={chatting} alt="" />
@@ -151,7 +204,7 @@ const Chat = () => {
         </span>
       </div>
 
-      <div className="chat-msg">
+      <div className="chat-msg" ref={chatRef}>
         {messages.map((msg, index) => {
           return (
             <div

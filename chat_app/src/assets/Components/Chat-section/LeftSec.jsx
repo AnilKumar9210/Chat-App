@@ -37,13 +37,9 @@ const LeftSec = () => {
     }
   }, [user]);
 
-  const handleOpts = () => {
-    if (optsRef.current.style.display === "block") {
-      optsRef.current.style.display = "none";
-    } else {
-      optsRef.current.style.display = "block";
-    }
-  };
+
+
+  
 
   const handleSearch = async (e) => {
     try {
@@ -60,18 +56,15 @@ const LeftSec = () => {
           console.log(chatData);
           const foundUser = querySnap.docs[0].data();
           console.log(foundUser);
-          let userExist = false;
-          chatData.map((user) => {
+          setUser(foundUser)
+          console.log(foundUser)
+          const userExist = chatData.map((user) => {
             if (user.rId == foundUser.id) {
-              userExist = true;
+              return true;
             }
           });
-          if (!userExist) {
-            setUser(foundUser);
-          }
-        } else {
-          setUser(null);
-        }
+          setSearch (userExist)
+        } 
       } else {
         setSearch(false);
       }
@@ -83,30 +76,51 @@ const LeftSec = () => {
   const addChat = async () => {
   const messageRef = collection(db, "messages");
   const chatRef = collection(db, "userChats");
-
+  
   try {
     const newMessageRef = doc(messageRef);
-
+    
     await setDoc(newMessageRef, {
       participants: [userData.id, user.id],
       createdAt: serverTimestamp(),
       messages: [],
     });
+    
+    console.log(user.id)
+    // await updateDoc(doc(chatRef, userData.id), {
+    //   chatData: arrayUnion({
+    //     rId: user.id,
+    //     messageSeen: true,
+    //     messageId: newMessageRef.id,
+    //     lastSeen: "",
+    //     updatedAt: Date.now(),
+    //     userName: user.name,
+    //   }),
+    // });
 
-    // ✅ Only update YOUR userChats document
     await updateDoc(doc(chatRef, userData.id), {
-      chatData: arrayUnion({
-        rId: user.id,
-        messageSeen: true,
-        messageId: newMessageRef.id,
-        lastSeen: "",
-        updatedAt: Date.now(),
-        userName: user.name,
-      }),
-    });
+  chatData: arrayUnion({
+    rId: user.id,
+    messageSeen: true,
+    messageId: newMessageRef.id,
+    lastSeen: "",
+    updatedAt: Date.now(),
+    userName: user.name,
+  }),
+});
 
-    // ❌ SKIP updating user.id's userChats doc — you’re not allowed
-    // They will see the chat once they send/receive messages or open the chat screen
+await updateDoc(doc(chatRef, user.id), {
+  chatData: arrayUnion({
+    rId: userData.id,
+    messageSeen: true,
+    messageId: newMessageRef.id,
+    lastSeen: "",
+    updatedAt: Date.now(),
+    userName: userData.name,
+  }),
+});
+
+    setSearch (false);
 
   } catch (error) {
     console.error(error);

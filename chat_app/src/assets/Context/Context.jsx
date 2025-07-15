@@ -1,87 +1,69 @@
-import { createContext, useEffect } from "react";
-import { useState } from "react";
+// src/assets/Context/Context.jsx
+
+import { createContext, useEffect, useState } from "react";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
-
 import { auth, db } from "../Configuration/Firebase";
-export const Appcontext = createContext();
 
-const AppContextProvider = (props) => {
-  const [userData, setUserData] = useState(null);
-  // const [chat,setChat] = useState (null);
+export const Appcontext = createContext(); // ✅ Rename for convention
+
+const AppcontextProvider = ({ children }) => {
+  const [userData, setUserData] = useState(null); // ✅ Should be null, not []
   const [chatData, setChatData] = useState([]);
   const [messageId, setMessageId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [chatUser, setChatUser] = useState(null);
 
-  const loadUserData = async (uid)=> {
-      const docSnap = await getDoc (doc (db,"users",uid));
-      // console.log(docSnap.data ());
-      setInterval (async ()=> {
-          if (auth.currentUser) {
-              await updateDoc (doc (db,"users",uid),{
-                  lastSeen:Date.now (),
-              })
-          }
-      },6000)
-      setUserData(docSnap.data ());
-  }
-
-//   const loadUserData = async (uid) => {
-//     if (!auth.currentUser) return;
-
-//     try {
-//       const userRef = doc(db, "users", auth.currentUser.uid);
-//       const docSnap = await getDoc(userRef);
-
-//       if (docSnap.exists()) {
-//         setUserData(docSnap.data());
-//       } else {
-//         console.error("User document does not exist.");
-//       }
-
-//       // Update lastSeen every 6 seconds (not recommended for production)
-//       const interval = setInterval(async () => {
-//         if (auth.currentUser) {
-//           await updateDoc(userRef, {
-//             lastSeen: Date.now(),
-//           });
-//         }
-//       }, 6000);
-
-//       // Clear interval when component unmounts
-//       return () => clearInterval(interval);
-//     } catch (error) {
-//       console.error("Error loading user data:", error);
-//     }
-//   };
-
-  useEffect(() => {
-    if (userData) {
-      const chatRef = doc(db, "userChats", userData.id);
-      const unSub = onSnapshot(chatRef, async (docs) => {
-        const chats = docs.data().chatData;
-        const tempData = [];
-        for (const key of chats) {
-          const userRef = doc(db, "users", key.rId.trim ());
-          const userSnap = await getDoc(userRef);
-          const userData = userSnap.data();
-          console.log(userData)
-          tempData.push({
-            ...key,
-            userData,
-          });
-          console.log(tempData)
-        }
-        setChatData(tempData.sort((a, b) => b.updatedAt - a.updatedAt));
-      });
-
-      return () => {
-        unSub();
-      };
+  const loadUserData = async (uid) => {
+    const docSnap = await getDoc(doc(db, "users", uid));
+    if (docSnap.exists()) {
+      setUserData(docSnap.data());
     } else {
-      setChatData(null);
+      console.warn("User not found in Firestore");
     }
+  };
+
+  // ✅ Update lastSeen every 6s with cleanup
+  useEffect(() => {
+    if (!userData?.id) return;
+
+    const interval = setInterval(async () => {
+      if (auth.currentUser) {
+        await updateDoc(doc(db, "users", userData.id), {
+          lastSeen: Date.now(),
+        });
+      }
+    }, 6000);
+
+    return () => clearInterval(interval); // ✅ Cleanup
   }, [userData]);
+
+  // ✅ Real-time listener for chat list
+  useEffect(() => {
+    if (!userData?.id) {
+      setChatData([]);
+      return;
+    }
+
+    const chatRef = doc(db, "userChats", userData.id);
+    const unSub = onSnapshot(chatRef, async (docSnap) => {
+      const chats = docSnap.data()?.chatData || [];
+
+      const tempData = await Promise.all(
+        chats.map(async (key) => {
+          const userSnap = await getDoc(doc(db, "users", key.rId.trim()));
+          return {
+            ...key,
+            userData: userSnap.data(),
+          };
+        })
+      );
+
+      setChatData(tempData.sort((a, b) => b.updatedAt - a.updatedAt));
+    });
+
+    return () => unSub();
+  }, [userData]);
+
   const value = {
     userData,
     setUserData,
@@ -97,8 +79,8 @@ const AppContextProvider = (props) => {
   };
 
   return (
-    <Appcontext.Provider value={value}>{props.children}</Appcontext.Provider>
+    <Appcontext.Provider value={value}>{children}</Appcontext.Provider>
   );
 };
 
-export default AppContextProvider;
+export default AppcontextProvider;

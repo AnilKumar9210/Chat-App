@@ -22,19 +22,19 @@ const Login = () => {
     e.preventDefault ();
     let done = false;
     if (!signIn){
-      signin (username,email,password);
+       signin (username,email,password);
       done = true;
     } else {
       const res = await login (email,password);
-      done = true;
       if (res) {
         setUserData (res)
+        if (userData.name && userData.email) {
+          navigate ('/chat');
+        } else {
+          navigate ('/profile');
+        }
+        done = true;
       }
-    }
-    if (userData.name && userData.email) {
-      navigate ('/chat');
-    } else {
-      navigate ('/profile');
     }
     if (done){
       setEmail ("");
@@ -70,7 +70,7 @@ const Login = () => {
         placeholder="Enter password..." type='password'
         onChange={(e)=>{setPassword (e.target.value)}}/>
         <span className='no-password none' ref={passwordRef}>*Please enter your password*</span>
-        <input type="submit" className='submit-btn' />
+        <input type="submit" value={signIn ? "Login" : "Sign-in"} className='submit-btn' />
         </div> : <div>
           <input className="input" 
         name="email" 
@@ -87,7 +87,7 @@ const Login = () => {
         name="password" 
         placeholder="Enter password..." type='password'
         onChange={(e)=>{setPassword (e.target.value)}}/>
-        <input type="submit" value="" className="submit-btn" />
+        <input type="submit" value="Sign-in" className="submit-btn" />
         
           </div>}
       </form>
