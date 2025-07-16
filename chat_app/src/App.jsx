@@ -1,4 +1,4 @@
-import { useEffect, useState,useContext } from 'react'
+import { useEffect, useState,useContext,lazy, Suspense } from 'react'
 import Login from './assets/Components/Login'
 import './App.css'
 import { Route,
@@ -13,6 +13,11 @@ import { auth } from './assets/Configuration/Firebase'
 import { Appcontext } from './assets/Context/Context'
 import Profile from './assets/Components/Profile'
 import { Component , captureOwnerStack } from 'react';
+
+const Login = lazy(() => import('./assets/Components/Login'));
+const Profile = lazy(() => import('./assets/Components/Profile'));
+const Chat = lazy(() => import('./assets/Components/Chat-section/Chat')); 
+const ErrorBoundary = lazy(() => import('./assets/Components/ErrorBoundary'));
 
 function App() {
   const [count, setCount] = useState(0)
@@ -36,11 +41,14 @@ function App() {
   return (
     <div className="App">
       <ToastContainer />
+      <Suspense fallback={<ErrorBoundary/>}>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/chat' element={<Chat/>} />
         <Route path='/profile' element={<Profile/>} />
       </Routes>
+      </Suspense>
+      {/* <Login /> */}
     </div>
   )
 }
