@@ -56,15 +56,18 @@ const LeftSec = () => {
           console.log(chatData);
           const foundUser = querySnap.docs[0].data();
           console.log(foundUser);
-          setUser(foundUser)
-          console.log(foundUser)
-          const userExist = chatData.map((user) => {
-            if (user.rId == foundUser.id) {
-              return true;
+          console.log(foundUser);
+          let userExist = false;
+          chatData.map((user) => {
+            if (user.rId === foundUser.id) {
+              userExist = true;
             }
           });
-          setSearch (userExist)
-        } 
+          if (!userExist) {
+            setUser(foundUser)
+          }
+          setSearch(userExist);
+        }
       } else {
         setSearch(false);
       }
@@ -87,16 +90,6 @@ const LeftSec = () => {
     });
     
     console.log(user.id)
-    // await updateDoc(doc(chatRef, userData.id), {
-    //   chatData: arrayUnion({
-    //     rId: user.id,
-    //     messageSeen: true,
-    //     messageId: newMessageRef.id,
-    //     lastSeen: "",
-    //     updatedAt: Date.now(),
-    //     userName: user.name,
-    //   }),
-    // });
 
     await updateDoc(doc(chatRef, userData.id), {
   chatData: arrayUnion({
@@ -130,47 +123,7 @@ await updateDoc(doc(chatRef, user.id), {
   setSearch(false);
 };
 
-  // const addChat = async () => {
-  //   const messageRef = collection(db, "messages");
-  //   const chatRef = collection(db, "userChats");
-  //   try {
-  //     const newMessageRef = doc(messageRef);
 
-  //     await setDoc(newMessageRef, {
-  //       participants:[userData.id,user.id],
-  //       createdAt: serverTimestamp(),
-  //       messages: [],
-  //     });
-
-
-  //     await updateDoc(doc(chatRef, user.id), {
-  //       chatData: arrayUnion({
-  //         rId: userData.id,
-  //         messageSeen: true,
-  //         messageId: newMessageRef.id,
-  //         lastSeen: "",
-  //         updatedAt: Date.now(),
-  //         userName: userData.name,
-  //       }),
-  //     });
-
-  //     await updateDoc(doc(chatRef, userData.id), {
-  //       chatData: arrayUnion({
-  //         rId: user.id,
-  //         messageSeen: true,
-  //         messageId: newMessageRef.id,
-  //         lastSeen: "",
-  //         updatedAt: Date.now(),
-  //         userName: user.name,
-  //       }),
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //     // toast.error(error.code.split("/")[1].split("-").join(" "));
-  //     toast.error("Error adding chat");
-  //   }
-  //   setSearch(false);
-  // };
 
   const setChat = (item) => {
     setMessageId(item.messageId);

@@ -130,45 +130,6 @@ const Chat = () => {
     }
   };
   
-//   const handleSend = async () => {
-//   try {
-//     if (input && messageId) {
-//       // 1. Add message to messages/{messageId} doc
-//       await updateDoc(doc(db, "messages", messageId), {
-//         messages: arrayUnion({
-//           sId: userData.id,
-//           text: input,
-//           createdAt: new Date(),
-//         }),
-//       });
-
-//       // 2. Update YOUR OWN userChats/{userData.id}
-//       const userChatsRef = doc(db, "userChats", userData.id);
-//       const userChatsSnapshot = await getDoc(userChatsRef);
-
-//       if (userChatsSnapshot.exists()) {
-//         const userChatData = userChatsSnapshot.data();
-//         const chatIndex = userChatData.chatData.findIndex(
-//           (c) => c.messageId === messageId
-//         );
-
-//         if (chatIndex !== -1) {
-//           userChatData.chatData[chatIndex].lastMessage =
-//             input.slice(0, 20) + " ";
-//           userChatData.chatData[chatIndex].createdAt = new Date();
-
-//           await updateDoc(userChatsRef, {
-//             chatData: userChatData.chatData,
-//           });
-//         }
-//       }
-
-//       setInput("");
-//     }
-//   } catch (err) {
-//     toast.error(err.message || "Error sending message");
-//   }
-// };
 
   
   return !chatUser? (<div className="no-chat">
