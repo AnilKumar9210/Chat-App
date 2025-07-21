@@ -22,7 +22,6 @@ const AppcontextProvider = ({ children }) => {
     }
   };
 
-  // ✅ Update lastSeen every 6s with cleanup
   useEffect(() => {
     if (!userData?.id) return;
 
@@ -34,10 +33,9 @@ const AppcontextProvider = ({ children }) => {
       }
     }, 6000);
 
-    return () => clearInterval(interval); // ✅ Cleanup
+    return () => clearInterval(interval); 
   }, [userData]);
 
-  // ✅ Real-time listener for chat list
   useEffect(() => {
     if (!userData?.id) {
       setChatData([]);
