@@ -21,6 +21,7 @@ const Login = () => {
   const onSubmitHandler = async (e)=> {
     e.preventDefault ();
     let done = false;
+    console.log(username,email,password);
     if (!signIn){
       await signin (username,email,password);
       done = true;

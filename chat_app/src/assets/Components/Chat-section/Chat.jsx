@@ -83,7 +83,6 @@ const Chat = () => {
 
 
   useEffect (()=>{
-    console.log(messages,userData)
   },[messages])
 
 

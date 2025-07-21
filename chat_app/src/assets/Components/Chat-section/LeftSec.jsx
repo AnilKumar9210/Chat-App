@@ -53,10 +53,7 @@ const LeftSec = () => {
         const q = query(userRef, where("name", "==", input.toLowerCase()));
         const querySnap = await getDocs(q);
         if (!querySnap.empty && querySnap.docs[0].data().id != userData.id) {
-          console.log(chatData);
           const foundUser = querySnap.docs[0].data();
-          console.log(foundUser);
-          console.log(foundUser);
           let userExist = false;
           chatData.map((user) => {
             if (user.rId === foundUser.id) {
@@ -126,6 +123,7 @@ await updateDoc(doc(chatRef, user.id), {
 
 
   const setChat = (item) => {
+    console.log(item)
     setMessageId(item.messageId);
     setChatUser(item);
     return

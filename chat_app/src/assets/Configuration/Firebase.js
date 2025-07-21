@@ -4,8 +4,6 @@ import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, setDoc ,doc, collection, query, where, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { Appcontext } from "../Context/Context";
-import { useContext } from "react";
 const firebaseConfig = {
   apiKey: "AIzaSyBxMF_UkGpeQjMIOBj8CCCBeap3-TWAopQ",
   authDomain: "chat-app-c2551.firebaseapp.com",
@@ -41,7 +39,7 @@ const signin = async (username,email,password)=> {
         })
     } catch (error){
       console.error (error);
-      toast.error (error.code.split("/")[1].split("-").join (" "));
+      toast.error (error.code);
     }
 }
 
@@ -58,7 +56,7 @@ const login = async (email,password)=> {
     }
   } catch (error) {
     console.error (error);
-    toast.error (error.code.split("/")[1].split("-").join (" "));
+    toast.error (error.code);
   }
 }
 
