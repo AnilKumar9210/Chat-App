@@ -5,6 +5,7 @@ import { Appcontext } from '../../Context/Context';
 import info from '../../../assets/Images/info.svg';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../Configuration/Firebase';
+import profilePic from '../../Images/profilepic.png';
 
 const RightSec = () => {
 
@@ -20,7 +21,6 @@ const RightSec = () => {
   }
 
   let ms;
-  // If Firestore Timestamp object
   if (typeof timestamp === "object" && timestamp.toMillis) {
     ms = timestamp.toMillis();
   } else {
@@ -60,9 +60,8 @@ useEffect(() => {
   }
   return (!chatUser?<div className='right-sec'>
       <div className="current-friend">
-        <span className="profile-letter profile-max">{userData.name[0].toUpperCase()}</span>
+        <img className="profile-max" src={userData.profile?userData.profile:profilePic} alt="" />
         <h1>{userData.name}</h1>
-      <div className="status"></div>
       </div>
       <img src={info} style={{width:25}} alt="" className='edit' onClick={handleEditProfile} />
       <span className='bio' style={{fontSize:17}}>{userData.bio}</span>
@@ -71,9 +70,8 @@ useEffect(() => {
     </div>:
     <div className='right-sec'>
       <div className="current-friend">
-        <span className="profile-letter profile-max">{chatUser.userName[0].toUpperCase()}</span>
+        <img className="profile-max" src={chatUser.profile?chatUser.profile:profilePic} alt="" />
         <h1>{chatUser.userName}</h1>
-      <div className="status"></div>
       </div>
       <img src={info} style={{width:25}} alt="" className='edit' onClick={handleEditProfile} />
       <span className='bio' style={{fontSize:17}}>{chatUser.bio}</span>

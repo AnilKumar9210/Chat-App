@@ -57,8 +57,14 @@
 }
 
 
-.profil-max {
-  width: 65px;
-  height: 65px;
+.profile-max {
+  width: 140px;
+  height: 140px;
   font-size: 40px;
+  border-radius: 50%;
+  background-color: #e7e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2c3e50;
 }

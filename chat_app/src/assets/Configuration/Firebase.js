@@ -38,8 +38,8 @@ const signin = async (username,email,password)=> {
           chatData:[],
         })
     } catch (error){
-      console.error (error);
-      toast.error (error.code);
+      console.error (error.code);
+      toast.error (error.code.split ("/")[1].replaceAll ("-"," "));
     }
 }
 

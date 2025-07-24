@@ -21,7 +21,7 @@ const Login = () => {
   const onSubmitHandler = async (e)=> {
     e.preventDefault ();
     let done = false;
-    console.log(username,email,password);
+    console.log(username,email,password,"Hello");
     if (!signIn){
       await signin (username,email,password);
       done = true;
@@ -37,11 +37,11 @@ const Login = () => {
         done = true;
       }
     }
-    if (done){
-      setEmail ("");
-      setPassword ("");
-      setUserName ("");
-    }
+    // if (done){
+    //   setEmail ("");
+    //   setPassword ("");
+    //   setUserName ("");
+    // }
   }
 
   

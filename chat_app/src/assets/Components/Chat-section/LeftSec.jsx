@@ -16,6 +16,7 @@ import {
 import "./LeftSec.css";
 import { Appcontext } from "../../Context/Context";
 import { toast } from "react-toastify";
+import profilePic from "../../Images/profilepic.png";
 
 const LeftSec = () => {
   const optsRef = useRef(null);
@@ -123,7 +124,6 @@ await updateDoc(doc(chatRef, user.id), {
 
 
   const setChat = (item) => {
-    console.log(item)
     setMessageId(item.messageId);
     setChatUser(item);
     return
@@ -165,7 +165,7 @@ await updateDoc(doc(chatRef, user.id), {
           {chatData?.map((item, index) => (
             <div className="friend" key={index} onClick={() => setChat(item)}>
               <div className="friend-info">
-                <span className="profile-letter">{item.userName[0].toUpperCase()}</span>
+                <img className="profile-letter" src={item.profile?item.profile:profilePic} alt="" />
               </div>
               <div className="userInfo">
                 <span>{item.userName}</span>
