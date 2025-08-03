@@ -126,7 +126,6 @@
   color: #9a96af;
 }
 
-
 .profile-letter {
   width: 40px;
   height: 40px;
@@ -137,4 +136,65 @@
   align-items: center;
   font-size: 20px;
   color: #2c3e50;
+}
+
+.user_profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px;
+  gap: 2px;
+  position: relative;
+  width: 100%;
+}
+
+.space-between:nth-child(2) {
+  width: 30px;
+}
+
+.user_profile:hover {
+  cursor: pointer;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.input-none {
+  position: absolute;
+  right: 38px;
+  align-self: center;
+  width: 230px;
+  max-width: 400px;
+  transition: .3s ease;
+  display: flex;
+  gap: 3px;
+}
+
+.input-none input {
+  height: 28px;
+  border-radius: 20px;
+  backdrop-filter: blur(1px);
+  color: white;
+  background: transparent;
+  width: 200px;
+  border: none;
+  outline: none;
+  display: flex;
+  font-size: .9rem;
+}
+.input-none span {
+  background: black;
+  display: block;
+  height: 28px;
+  width: 1px;
+  right: 200px;
+  max-width: 400px;
+  position: absolute;
+  transition: 0.3s ease;
+  right: -200;
 }

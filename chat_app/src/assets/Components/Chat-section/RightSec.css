@@ -6,14 +6,28 @@
   justify-content: center;
   align-items: center;
   color: white;
+  overflow: hidden;
+  max-height: 0;
+  width: 25vw;
+  position: absolute;
+  transition: 1.4s ease-in-out;
+  left: 55px;
+  border-radius: 10px;
+}
+
+.right-sec.visibility {
+  padding: 20px;
+  max-height: 600px;
 }
 
 .current-friend {
   position: relative;
   align-items: center;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  align-self: flex-start;
 }
 
 .status {
@@ -35,7 +49,7 @@
 
 .logout-btn {
   bottom: 5%;
-  position: absolute;
+  /* position: absolute; */
   border-radius: 8px;
   border: none;
   color: white;
@@ -56,10 +70,9 @@
   box-shadow: 2px 2px 7px rgb(86, 83, 83);
 }
 
-
 .profile-max {
-  width: 140px;
-  height: 140px;
+  width: 60px;
+  height: 60px;
   font-size: 40px;
   border-radius: 50%;
   background-color: #e7e8f0;

@@ -12,6 +12,7 @@ const AppcontextProvider = ({ children }) => {
   const [messageId, setMessageId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [chatUser, setChatUser] = useState(null);
+  const [visibility, setVisibility] = useState(false);
 
   const loadUserData = async (uid) => {
     const docSnap = await getDoc(doc(db, "users", uid));
@@ -76,6 +77,8 @@ const AppcontextProvider = ({ children }) => {
     setMessageId,
     chatUser,
     setChatUser,
+    visibility,
+    setVisibility,
   };
 
   return (

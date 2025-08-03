@@ -27,6 +27,7 @@ const LeftSec = () => {
     setMessageId,
     setMessages,
     messageId,
+    setVisibility,
   } = useContext(Appcontext);
   const [user, setUser] = useState(null);
   const [showSearch, setSearch] = useState(false);
@@ -38,9 +39,9 @@ const LeftSec = () => {
     }
   }, [user]);
 
-
-
-  
+  const toggleProfile = ()=> {
+    setVisibility (prev=>!prev)
+  }
 
   const handleSearch = async (e) => {
     try {
@@ -131,7 +132,7 @@ await updateDoc(doc(chatRef, user.id), {
 
   return (
     <div className="left-sec">
-      <div className="search-bar">
+      {/* <div className="search-bar">
         <img
           src="https://cdn.hugeicons.com/icons/search-01-stroke-standard.svg"
           alt="x"
@@ -140,8 +141,24 @@ await updateDoc(doc(chatRef, user.id), {
           type="text"
           name="search"
           placeholder="search"
-          onChange={handleSearch}
+          
         />
+      </div> */}
+      <div className="user-info">
+        <div className="space-between">
+          <img className="user_profile" src={user?.profilePic || profilePic} alt="" onClick={toggleProfile} />
+        
+        <div className="input-none">
+          <img
+          src="https://cdn.hugeicons.com/icons/search-01-stroke-standard.svg"
+          alt="x"
+        />
+          <input type="search"
+          placeholder="search"
+          onChange={handleSearch} />
+        </div>
+        </div>
+        
       </div>
       <div className="line"></div>
       {showSearch ? (
